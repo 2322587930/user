@@ -21,8 +21,7 @@
       <el-table-column  label="操作">
            <template slot-scope="scope">
               <el-button type="primary" @click='fn2(scope.row.id)'>编辑</el-button>
-              <el-button type="danger" @click='fn6(scope.row.id)'>删除</el-button>
-              <v-bn></v-bn>
+             <v-bn  @del='dells(scope.row.id)'></v-bn>
           </template>
       </el-table-column>
     </el-table>
@@ -31,8 +30,8 @@
 </template>
 
 <script>
- import {shuju,yidiao} from '../../../uilt/index'
- 
+ import {shuju,yidiao,shan} from '../../../uilt/index'
+ import { success, err } from "../../../uilt/alert";
  import {mapGetters,mapActions} from "vuex"
 export default {
    mounted(){
@@ -59,9 +58,15 @@ export default {
       this.$store.state.id=a
       this.$emit('zhuan')
     },
-    fn6(b){
-       this.$store.state.id=b
-       this.$emit('tai')
+     dells(id){
+     shan({id:id}).then(res=>{
+         if(res.data.code==200){
+                   success(res.data.msg)
+                    this.reqs()
+               }else{
+                   err('失败')
+               }
+      })
     }
   }
 }

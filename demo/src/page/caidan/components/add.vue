@@ -71,7 +71,13 @@ data(){
             '/caidan',
             '/jiaose',
             '/guanli',
-            '/fenlei'
+            '/fenlei',
+            '/fenlei',
+            '/kuige',
+            '/shangping',
+            '/huiyuan',
+            '/lunbo',
+            '/miaosha'
         ],
         formLabelWidth: '120px',
        

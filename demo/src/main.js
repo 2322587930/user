@@ -10,6 +10,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import store from "./store"
 import commmonc from './components/index'
+import filters from './filter/time'
+Vue.filter('cc',filters)
 for(let i in commmonc){
   Vue.component(i,commmonc[i])
 }

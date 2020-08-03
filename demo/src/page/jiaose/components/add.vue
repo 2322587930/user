@@ -10,8 +10,8 @@
             :data="lists"
             show-checkbox
             node-key="id"
-            :default-expanded-keys="[2]"
-            :default-checked-keys="[1]"
+          
+            :default-checked-keys="arr"
             :props="defaultProps"
             ref="tree"
           ></el-tree>
@@ -48,7 +48,7 @@ export default {
         status: 1,
         menus: "",
       },
-
+       arr:[],
       formLabelWidth: "80px",
 
       data: [],
@@ -77,13 +77,17 @@ export default {
       this.isfalse.show3 = false;
     },
     fn8() {
+
       let id = this.$store.state.id1;
       yige({ id: id }).then((res) => {
+        console.log(res.data.list)
         this.form = res.data.list;
+       this.arr=JSON.parse(this.form.menus)
       });
     },
     xiu() {
       this.form.id = this.$store.state.id1;
+      this.form.menus = JSON.stringify(this.$refs.tree.getCheckedKeys());
       xiugai(this.form).then((res) => {
         if (res.data.code == 200) {
           this.isfalse.show3 = false;

@@ -31,7 +31,7 @@
 <script>
 import {mapGetters,mapActions} from "vuex"
 import {success,err} from '../../../../uilt/alert'
-import {fenleishan} from '../../../../uilt/index'
+import {miaoshan} from '../../../../uilt/index'
 export default {
     props:['isb'],
     methods:{
@@ -46,17 +46,16 @@ export default {
            this.$emit('fen')
         },
         dell(a){
-            console.log(a)
-           fenleishan({id:a}).then(res=>{
+        
+           miaoshan({id:a}).then(res=>{
                if(res.data.code==200){
                    success(res.data.msg)
-                   this.chang4()
+                   this.chang11()
                }else{
                    err(res.data.msg)
                }
            })
         }
-        
     },
     computed:{
         ...mapGetters({

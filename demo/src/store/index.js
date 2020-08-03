@@ -37,7 +37,7 @@ const state={
     id7:{},
     id8:{},
     miaosha:[],
-    users:null
+    users:sessionStorage.getItem('users')? JSON.parse(sessionStorage.getItem('users')):null
 }
 const mutations={
     chang(state,arr){
@@ -80,6 +80,7 @@ chang8(state,a){
 },
 changuse(state,a){
    state.users=a
+   sessionStorage.setItem('users',JSON.stringify(state.users))
 },
 chang9(state,a){
     state.huiyuan=a

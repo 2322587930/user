@@ -4,7 +4,9 @@
       <el-form :model="form">
         <el-form-item label="活动名称" label-width="80px">
           <el-input v-model="form.title" autocomplete="off"></el-input>
+          
         </el-form-item>
+       
         <el-form-item label="活动名称" label-width="80px">
           <template>
             <div class="block">
@@ -13,8 +15,8 @@
                 v-model="value1"
                 type="daterange"
                 range-separator="至"
-                start-placeholder=""
-                end-placeholder=""
+                :start-placeholder="form.begintime |cc"
+                :end-placeholder="form.endtime|cc"
                 @change="getSTime"
               ></el-date-picker>
             </div>
@@ -73,7 +75,7 @@
 </template>
 
 <script>
-import {  miaoadd,miaoyi, fenleixiu } from "../../../../uilt/index";
+import {  miaoadd,miaoyi, miaoxiu } from "../../../../uilt/index";
 import { mapGetters, mapActions } from "vuex";
 import { success, err } from "../../../../uilt/alert";
 export default {
@@ -130,15 +132,14 @@ export default {
       this.form.begintime=new Date(a[0]).getTime()
       this.form.endtime=new Date(a[1]).getTime()
    
-    
     },
      change(){
        let index1 = this.fenlei.findIndex((item) => {
         return item.id == this.form.first_cateid;
       });
-     console.log(this.fenlei[index1].children)
+  
       this.second=this.fenlei[index1].children
-      console.log(this.shangping)
+    
         this.form.second_cateid = "";
 
     },
@@ -155,38 +156,37 @@ export default {
     },
     ...mapActions({
       chang4: "chang4",
-      chang8:'chang8'
+      chang8:'chang8',
+      chang11:'chang11'
     }),
     add() {
        miaoadd(this.form).then((res) => {
         if (res.data.code == 200) {
           success("添加成功");
           this.isfalse.show3 = false;
-          this.chang4();
+          this.chang11();
         } else {
           err(res.data.msg);
         }
       });
     },
     fn2() {
-      
+  
       let id = this.$store.state.id8;
-      console.log(id)
+  
       miaoyi({ id: id }).then((res) => {
-       
         this.form = res.data.list;
-        console.log( new Data(this.form.begintime))
-        
         this.isfalse.show4 = false;
         this.isfalse.txt = "编辑分类";
       });
     },
     xiu() {
-      this.form.id = this.$store.state.id3;
-      fenleixiu(this.form).then((res) => {
+      this.form.id = this.$store.state.id8;
+      console.log(this.form)
+      miaoxiu(this.form).then((res) => {
         if (res.data.code == 200) {
           success(res.data.msg);
-          this.chang4();
+          this.chang11();
           this.isfalse.show3 = false;
         } else {
           err(res.data.msg);
@@ -203,6 +203,7 @@ export default {
   mounted(){
     this.chang4()
     this.chang8()
+    this.chang11()
   }
 };
 </script>

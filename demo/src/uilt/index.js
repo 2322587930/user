@@ -1,10 +1,19 @@
 import axios from 'axios'
 import qs from 'qs'
+
+import store from '../store/index'
+const baseurl='/api'
 axios.interceptors.response.use((res)=>{
     console.log(res)
     return res
 })
-const baseurl='/api'
+axios.interceptors.request.use(config=>{
+    if(config.url !=baseurl+'/api/userlogin'){
+        config.headers.authorization=store.state.users.token
+    }
+    return config
+})
+
 
 export const shuju=()=>{
 return  axios({
@@ -404,5 +413,22 @@ export const miaoyi=(params)=>{
         url:baseurl+'/api/seckinfo',
         method:'get',
         params:params
+    })
+}
+//修改数据
+export const miaoxiu=(params)=>{
+   
+    return axios({
+        url:baseurl+'/api/seckedit',
+        method:'post',
+        data:qs.stringify(params)
+    })
+}
+//删除数据
+export const miaoshan=(params)=>{
+    return axios({
+        url:baseurl+'/api/seckdelete',
+        method:'post',
+        data:qs.stringify(params)
     })
 }
